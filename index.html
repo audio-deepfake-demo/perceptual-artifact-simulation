@@ -1,117 +1,344 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Explainable Audio Deepfake Detection — Demo</title>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --bg:#0a0c10;--surface:#12151c;--surface2:#1a1f2b;--border:#252b38;
-      --accent:#00e5a0;--accent2:#ff4d6d;--accent3:#6c8fff;--accent4:#f0c040;--accent5:#c084fc;
-      --text:#e8eaf0;--muted:#7a8296;
-      --mono:'IBM Plex Mono',monospace;--sans:'DM Sans',sans-serif;--display:'Syne',sans-serif;
+      --bg: #f9f9f7;
+      --surface: #ffffff;
+      --surface2: #f3f3f0;
+      --border: #e4e4e0;
+      --border2: #d0d0cb;
+      --text: #1a1a18;
+      --muted: #7a7a72;
+      --accent-art:  #2d6a4f;
+      --accent-ling: #1d4e89;
+      --accent-tmp:  #9b2335;
+      --accent-sig:  #7b5e00;
+      --accent-vq:   #5b2d8e;
+      --mono: 'Inter', sans-serif;
+      --body: 'Inter', sans-serif;
+      --display: 'Lora', serif;
     }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.7;min-height:100vh;overflow-x:hidden}
-    body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,160,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,160,.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
-    header{position:relative;padding:72px 24px 56px;text-align:center;border-bottom:1px solid var(--border);overflow:hidden}
-    header::after{content:'';position:absolute;left:50%;bottom:-1px;transform:translateX(-50%);width:200px;height:2px;background:var(--accent)}
-    .glow-orb{position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse at center,rgba(0,229,160,.12) 0%,transparent 70%);pointer-events:none}
-    .tag{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(0,229,160,.3);padding:4px 12px;border-radius:2px;margin-bottom:20px;background:rgba(0,229,160,.04)}
-    h1{font-family:var(--display);font-size:clamp(26px,5vw,50px);font-weight:800;line-height:1.1;max-width:820px;margin:0 auto 16px;letter-spacing:-.02em}
-    h1 em{font-style:normal;color:var(--accent)}
-    .authors{font-weight:300;font-size:15px;color:var(--muted);margin-bottom:6px}
-    .venue{font-family:var(--mono);font-size:12px;color:var(--accent3);letter-spacing:.08em}
-    .links{display:flex;justify-content:center;gap:12px;margin-top:28px;flex-wrap:wrap}
-    .btn{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;padding:9px 22px;border-radius:3px;border:1px solid;cursor:pointer;transition:all .2s;display:inline-block}
-    .btn-primary{background:var(--accent);color:#000;border-color:var(--accent);font-weight:600}
-    .btn-primary:hover{background:#00ffb3}
-    .btn-outline{color:var(--text);border-color:var(--border);background:transparent}
-    .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
-    main{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding:0 24px 80px}
-    .section{margin-top:72px}
-    .section-label{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
-    .section-title{font-family:var(--display);font-size:26px;font-weight:700;margin-bottom:10px}
-    .section-desc{color:var(--muted);font-size:15px;max-width:680px;margin-bottom:36px}
-    .abstract-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:28px 32px;border-radius:4px;font-size:15px;line-height:1.85;color:#c8cad4}
-    /* taxonomy overview */
-    .taxonomy-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:40px}
-    .tax-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:16px 18px;transition:all .2s;border-top:3px solid}
-    .tax-card:hover{transform:translateY(-2px)}
-    .tc-articulation{border-top-color:var(--accent);color:var(--accent)}
-    .tc-linguistic{border-top-color:var(--accent3);color:var(--accent3)}
-    .tc-temporal{border-top-color:var(--accent2);color:var(--accent2)}
-    .tc-signal{border-top-color:var(--accent4);color:var(--accent4)}
-    .tc-spectral{border-top-color:var(--accent5);color:var(--accent5)}
-    .tax-card-name{font-family:var(--display);font-size:13px;font-weight:700;margin-bottom:4px}
-    .tax-card-sub{font-family:var(--mono);font-size:10px;color:var(--muted);line-height:1.6}
-    /* tabs */
-    .tab-bar{display:flex;gap:4px;margin-bottom:32px;flex-wrap:wrap}
-    .tab{font-family:var(--mono);font-size:11px;letter-spacing:.05em;padding:8px 16px;border-radius:3px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:all .2s}
-    .tab:hover{color:var(--text);border-color:#3a4155}
-    .tab[data-cat="articulation"].active{background:rgba(0,229,160,.1);border-color:var(--accent);color:var(--accent)}
-    .tab[data-cat="linguistic"].active{background:rgba(108,143,255,.1);border-color:var(--accent3);color:var(--accent3)}
-    .tab[data-cat="temporal"].active{background:rgba(255,77,109,.1);border-color:var(--accent2);color:var(--accent2)}
-    .tab[data-cat="signal"].active{background:rgba(240,192,64,.1);border-color:var(--accent4);color:var(--accent4)}
-    .tab[data-cat="spectral"].active{background:rgba(192,132,252,.1);border-color:var(--accent5);color:var(--accent5)}
-    /* panels */
-    .artefact-panel{display:none}
-    .artefact-panel.active{display:block}
-    .samples-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
-    /* cards */
-    .sample-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:20px 22px 18px;transition:border-color .2s,transform .2s;position:relative}
-    .sample-card:hover{transform:translateY(-2px)}
-    .cat-articulation .sample-card{border-top:2px solid var(--accent)}.cat-articulation .sample-card:hover{border-color:var(--accent)}
-    .cat-linguistic   .sample-card{border-top:2px solid var(--accent3)}.cat-linguistic .sample-card:hover{border-color:var(--accent3)}
-    .cat-temporal     .sample-card{border-top:2px solid var(--accent2)}.cat-temporal .sample-card:hover{border-color:var(--accent2)}
-    .cat-signal       .sample-card{border-top:2px solid var(--accent4)}.cat-signal .sample-card:hover{border-color:var(--accent4)}
-    .cat-spectral     .sample-card{border-top:2px solid var(--accent5)}.cat-spectral .sample-card:hover{border-color:var(--accent5)}
-    .sample-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:12px}
-    .subcategory-badge{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:2px}
-    .badge-articulation{background:rgba(0,229,160,.1);color:var(--accent)}
-    .badge-linguistic{background:rgba(108,143,255,.1);color:var(--accent3)}
-    .badge-temporal{background:rgba(255,77,109,.1);color:var(--accent2)}
-    .badge-signal{background:rgba(240,192,64,.1);color:var(--accent4)}
-    .badge-spectral{background:rgba(192,132,252,.1);color:var(--accent5)}
-    /* transcript */
-    .transcript-label{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-    .transcript-text{font-size:13.5px;line-height:1.6;color:#c8cad4;font-style:italic;margin-bottom:14px;padding:8px 12px;background:var(--surface2);border-radius:3px;border-left:2px solid var(--border)}
-    /* artefact description (for non-transcript cards) */
-    .artefact-desc{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:14px;padding:6px 10px;background:var(--surface2);border-radius:3px;letter-spacing:.03em}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      font-size: 15px;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── HEADER ── */
+    header {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 72px 24px 56px;
+      border-bottom: 1px solid var(--border);
+    }
+    .venue-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -.01em;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+    .authors {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .04em;
+      text-decoration: none;
+      padding: 7px 18px;
+      border-radius: 2px;
+      border: 1px solid var(--border2);
+      color: var(--text);
+      background: var(--surface);
+      transition: border-color .15s, background .15s;
+      display: inline-block;
+    }
+    .btn:hover { border-color: var(--text); background: var(--surface2); }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── SECTION ── */
+    .section { margin-top: 64px; }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .section-desc {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 620px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    /* ── ABSTRACT ── */
+    .abstract-text {
+      font-family: var(--display);
+      font-size: 15px;
+      line-height: 1.9;
+      color: #2e2e2b;
+      border-left: 2px solid var(--border2);
+      padding-left: 20px;
+    }
+
+    /* ── TAXONOMY TABLE ── */
+    .taxonomy-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    .taxonomy-table th {
+      text-align: left;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border2);
+      background: var(--surface2);
+    }
+    .taxonomy-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .taxonomy-table tr:last-child td { border-bottom: none; }
+    .cat-label {
+      font-weight: 600;
+      font-size: 12px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cat-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: inline-block;
+    }
+    .dot-art  { background: var(--accent-art); }
+    .dot-ling { background: var(--accent-ling); }
+    .dot-tmp  { background: var(--accent-tmp); }
+    .dot-sig  { background: var(--accent-sig); }
+    .dot-vq   { background: var(--accent-vq); }
+    .taxonomy-table .sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    /* ── TAB BAR ── */
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--border2);
+      margin-bottom: 28px;
+      overflow-x: auto;
+    }
+    .tab {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 9px 16px;
+      border: none;
+      border-bottom: 2px solid transparent;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      white-space: nowrap;
+      margin-bottom: -1px;
+      transition: color .15s, border-color .15s;
+    }
+    .tab:hover { color: var(--text); }
+    .tab[data-cat="articulation"].active { color: var(--accent-art);  border-bottom-color: var(--accent-art); }
+    .tab[data-cat="linguistic"].active   { color: var(--accent-ling); border-bottom-color: var(--accent-ling); }
+    .tab[data-cat="temporal"].active     { color: var(--accent-tmp);  border-bottom-color: var(--accent-tmp); }
+    .tab[data-cat="signal"].active       { color: var(--accent-sig);  border-bottom-color: var(--accent-sig); }
+    .tab[data-cat="spectral"].active     { color: var(--accent-vq);   border-bottom-color: var(--accent-vq); }
+
+    /* ── PANELS ── */
+    .artefact-panel { display: none; }
+    .artefact-panel.active { display: block; }
+
+    /* ── SAMPLE GRID ── */
+    .samples-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+    }
+    .sample-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 18px 20px;
+      transition: border-color .15s;
+    }
+    .sample-card:hover { border-color: var(--border2); }
+
+    /* left border accent per category */
+    .cat-articulation .sample-card { border-left: 3px solid var(--accent-art); }
+    .cat-linguistic   .sample-card { border-left: 3px solid var(--accent-ling); }
+    .cat-temporal     .sample-card { border-left: 3px solid var(--accent-tmp); }
+    .cat-signal       .sample-card { border-left: 3px solid var(--accent-sig); }
+    .cat-spectral     .sample-card { border-left: 3px solid var(--accent-vq); }
+
+    .subcategory-badge {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+    .badge-articulation { color: var(--accent-art); }
+    .badge-linguistic   { color: var(--accent-ling); }
+    .badge-temporal     { color: var(--accent-tmp); }
+    .badge-signal       { color: var(--accent-sig); }
+    .badge-spectral     { color: var(--accent-vq); }
+
+    .field-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .transcript-text {
+      font-family: var(--display);
+      font-size: 13px;
+      line-height: 1.65;
+      color: #3a3a37;
+      font-style: italic;
+      margin-bottom: 14px;
+      padding: 8px 10px;
+      background: var(--surface2);
+      border-radius: 2px;
+    }
+    .artefact-desc {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 14px;
+      padding: 6px 10px;
+      background: var(--surface2);
+      border-radius: 2px;
+    }
+
     /* audio */
-    .audio-row{margin-bottom:10px}
-    .audio-row-label{display:flex;align-items:center;gap:7px;margin-bottom:5px}
-    .chip{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:2px;border:1px solid;letter-spacing:.04em}
-    .chip-spoof{color:var(--accent2);border-color:rgba(255,77,109,.3)}
-    audio{width:100%;height:30px;border-radius:3px;outline:none}
+    .audio-row { margin-bottom: 8px; }
+    .chip-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .chip-spoof-label { color: #9b2335; }
+    audio {
+      width: 100%;
+      height: 28px;
+      border-radius: 2px;
+      outline: none;
+    }
+
     /* explanation */
-    .explanation-toggle{margin-top:12px;width:100%;background:none;border:1px dashed var(--border);color:var(--muted);font-family:var(--mono);font-size:10px;letter-spacing:.05em;padding:6px 0;cursor:pointer;border-radius:3px;transition:all .2s}
-    .explanation-toggle:hover{border-color:var(--accent3);color:var(--accent3)}
-    .explanation-box{display:none;margin-top:8px;padding:10px 13px;background:var(--surface2);border-radius:3px;font-size:12.5px;color:#a0a8bb;line-height:1.65;border-left:2px solid var(--accent3)}
-    .explanation-box.open{display:block}
-    /* description examples section */
-    .desc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
-    .desc-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:20px 22px}
-    .desc-card-label{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-    .desc-card-text{font-size:13.5px;line-height:1.7;color:#c8cad4;margin-bottom:14px}
-    footer{text-align:center;padding:36px 24px;border-top:1px solid var(--border);font-family:var(--mono);font-size:12px;color:var(--muted);position:relative;z-index:1}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-    header,.section{animation:fadeUp .4s ease both}
-    @media(max-width:600px){header{padding:48px 20px 36px}h1{font-size:24px}.samples-grid,.desc-grid{grid-template-columns:1fr}.taxonomy-grid{grid-template-columns:1fr 1fr}}
+    .explanation-toggle {
+      margin-top: 10px;
+      width: 100%;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: .04em;
+      padding: 6px 0;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: border-color .15s, color .15s;
+    }
+    .explanation-toggle:hover { border-color: var(--border2); color: var(--text); }
+    .explanation-box {
+      display: none;
+      margin-top: 8px;
+      padding: 10px 12px;
+      background: var(--surface2);
+      border-radius: 2px;
+      font-size: 12px;
+      color: #4a4a46;
+      line-height: 1.7;
+      border-left: 2px solid var(--border2);
+    }
+    .explanation-box.open { display: block; }
+
+    /* ── FOOTER ── */
+    footer {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      header { padding: 48px 20px 40px; }
+      h1 { font-size: 24px; }
+      .samples-grid { grid-template-columns: 1fr; }
+      .taxonomy-table { font-size: 12px; }
+    }
   </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
-  <div class="glow-orb"></div>
-  <div class="tag">IJCB 2026 · Anonymous Submission</div>
-  <h1>Explainable <em>Audio Deepfake</em> Detection</h1>
-  <p class="authors">Anonymous Authors</p>
-  <p class="venue">Under Review · IJCB 2026</p>
+  <h1>Explainable Audio Deepfake Detection</h1>
+  <div class="authors">Anonymous Submission</div>
   <div class="links">
-    <a class="btn btn-primary" href="#">Paper (PDF)</a>
+    <a class="btn" href="#">Paper (PDF)</a>
   </div>
 </header>
 
@@ -119,46 +346,58 @@
 
   <!-- Abstract -->
   <section class="section">
-    <div class="section-label">Overview</div>
-    <div class="section-title">Abstract</div>
-    <div class="abstract-box">
-      <!-- REPLACE WITH YOUR ACTUAL ABSTRACT -->
+    <div class="section-eyebrow">Abstract</div>
+    <p class="abstract-text">
       Audio deepfakes pose a growing threat to speaker verification systems and media integrity. While existing detection systems achieve strong performance, they remain opaque black boxes offering no insight into <em>why</em> a sample is flagged as spoofed. In this work, we present an explainable framework for audio deepfake detection that identifies and categorises specific acoustic artefacts left behind by generative models. Our approach maps detections onto an interpretable artefact taxonomy spanning articulation, linguistic/paralinguistic, temporal/prosodic, signal-level, and spectral/voice-quality dimensions, providing human-understandable rationale for each prediction.
-    </div>
+    </p>
   </section>
 
   <!-- Taxonomy -->
   <section class="section">
-    <div class="section-label">Artefact Taxonomy</div>
-    <div class="section-title">Five Artefact Categories</div>
+    <div class="section-eyebrow">Artefact Taxonomy</div>
+    <div class="section-title">Five Perceptual Categories</div>
     <p class="section-desc">Our taxonomy organises deepfake artefacts into five perceptually grounded categories, each with subcategories describing how synthesised speech deviates from natural human speech.</p>
-    <div class="taxonomy-grid">
-      <div class="tax-card tc-articulation">
-        <div class="tax-card-name">Articulation Related</div>
-        <div class="tax-card-sub">Incomplete / Poor articulation<br>Slurred speech</div>
-      </div>
-      <div class="tax-card tc-linguistic">
-        <div class="tax-card-name">Linguistic / Paralinguistic</div>
-        <div class="tax-card-sub">Mispronounced words / acronyms<br>Word / phrase repetition<br>Unnatural paralinguistic sounds</div>
-      </div>
-      <div class="tax-card tc-temporal">
-        <div class="tax-card-name">Temporal / Prosodic</div>
-        <div class="tax-card-sub">Awkward pauses / word stress<br>Missing natural pauses / breath<br>Lack of expressiveness / flat intonation</div>
-      </div>
-      <div class="tax-card tc-signal">
-        <div class="tax-card-name">Signal-Level</div>
-        <div class="tax-card-sub">Background noise (constant / quantization)<br>Impulse noise (click / pop / thud / buzz)</div>
-      </div>
-      <div class="tax-card tc-spectral">
-        <div class="tax-card-name">Voice-Quality</div>
-        <div class="tax-card-sub">Muffled voice<br>Unnatural voice timbre<br>Distorted / wobbly voice</div>
-      </div>
-    </div>
+    <table class="taxonomy-table">
+      <thead>
+        <tr>
+          <th style="width:30%">Category</th>
+          <th>Subcategories</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="cat-label"><span class="cat-dot dot-art"></span>Articulation Related</span></td>
+          <td class="sub">Incomplete / Poor articulation<br>Slurred speech</td>
+          <td class="sub">Lack of clarity in speech formation; words unclear or merged.</td>
+        </tr>
+        <tr>
+          <td><span class="cat-label"><span class="cat-dot dot-ling"></span>Linguistic / Paralinguistic</span></td>
+          <td class="sub">Mispronounced words / acronyms<br>Word / phrase repetition<br>Unnatural paralinguistic sounds</td>
+          <td class="sub">Clear but mispronounced or repeated words; unnatural filler sounds.</td>
+        </tr>
+        <tr>
+          <td><span class="cat-label"><span class="cat-dot dot-tmp"></span>Temporal / Prosodic</span></td>
+          <td class="sub">Awkward pauses / word stress<br>Missing natural pauses / breath<br>Lack of expressiveness</td>
+          <td class="sub">Errors in timing, rhythm, stress, or intonation.</td>
+        </tr>
+        <tr>
+          <td><span class="cat-label"><span class="cat-dot dot-sig"></span>Signal-Level</span></td>
+          <td class="sub">Background / quantization noise<br>Impulse noise (click / pop / thud)</td>
+          <td class="sub">Unwanted distortions at the audio signal level, independent of speech content.</td>
+        </tr>
+        <tr>
+          <td><span class="cat-label"><span class="cat-dot dot-vq"></span>Spectral / Voice-Quality</span></td>
+          <td class="sub">Muffled voice<br>Unnatural voice timbre<br>Distorted / wobbly voice</td>
+          <td class="sub">Unnatural voice characteristics in spectral texture or quality.</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 
   <!-- Audio Samples -->
   <section class="section">
-    <div class="section-label">Audio Samples</div>
+    <div class="section-eyebrow">Audio Samples</div>
     <div class="section-title">Samples by Artefact Category</div>
     <p class="section-desc">Each card shows the transcript (where applicable), a spoofed sample exhibiting the named artefact, and the model's explanation for its detection.</p>
 
@@ -170,415 +409,299 @@
       <button class="tab" data-cat="spectral">Voice-Quality</button>
     </div>
 
-    <!-- ══ ARTICULATION ══ -->
+    <!-- ARTICULATION -->
     <div class="artefact-panel cat-articulation active" id="panel-articulation">
       <div class="samples-grid">
 
-        <!-- TM00150: Slurred Speech -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-articulation">Slurred Speech</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
+          <div class="subcategory-badge badge-articulation">Slurred Speech</div>
+          <div class="field-label">Transcript</div>
           <p class="transcript-text">"to describe whose vast height and immense riches it would perhaps you yawobewougyaatoo wougyaouwmuch forwouwmewougyaouwtoyouyawoattempt."</p>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/TM00150.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Word boundaries are merged and blended throughout the utterance. The synthesiser fails to produce distinct inter-word silence intervals, causing adjacent phonemes to coalesce in a way uncharacteristic of natural speech.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Word boundaries are merged and blended throughout the utterance. The synthesiser fails to produce distinct inter-word silence intervals, causing adjacent phonemes to coalesce in a way uncharacteristic of natural speech.</div>
         </div>
 
-        <!-- TM02128: Poor Word Articulation -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-articulation">Poor Word Articulation</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
-          <p class="transcript-text">"to bwock the amendmentw although I would be awfully glad to help get some other kind of amendment ratified." <span style="color:var(--muted);font-size:12px;font-style:normal;"></span></p>
+          <div class="subcategory-badge badge-articulation">Poor Word Articulation</div>
+          <div class="field-label">Transcript</div>
+          <p class="transcript-text">"to bwock the amendmentw although I would be awfully glad to help get some other kind of amendment ratified."</p>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/TM02128.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Consonants are mispronounced due to poor articulatory precision — "block" becomes "bwock" and "amendment" is distorted at the final consonant. The model flags anomalous formant transitions at liquid and stop consonants.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Consonants are mispronounced due to poor articulatory precision — "block" becomes "bwock" and "amendment" is distorted at the final consonant. The model flags anomalous formant transitions at liquid and stop consonants.</div>
         </div>
 
-        <!-- TM02157 (desc CSV): Poor Word Articulation -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-articulation">Poor Word Articulation</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
-          <p class="transcript-text">"Respiration, that is, the absorption of oxygen and the exhalation of carbonec acidua." <span style="color:var(--muted);font-size:12px;font-style:normal;">(distorted or imprecisely formed)</span></p>
+          <div class="subcategory-badge badge-articulation">Poor Word Articulation</div>
+          <div class="field-label">Transcript</div>
+          <p class="transcript-text">"Respiration, that is, the absorption of oxygen and the exhalation of carbonec acidua."</p>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/TM02157.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Certain words such as "carbonic acid" are distorted or imprecisely formed, reducing intelligibility despite clear word boundaries. The model detects reduced spectral energy in stop consonant bursts and anomalous vowel formants.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Words such as "carbonic acid" are distorted or imprecisely formed, reducing intelligibility despite clear word boundaries. The model detects reduced spectral energy in stop consonant bursts and anomalous vowel formants.</div>
         </div>
 
       </div>
     </div>
 
-    <!-- ══ LINGUISTIC ══ -->
+    <!-- LINGUISTIC -->
     <div class="artefact-panel cat-linguistic" id="panel-linguistic">
       <div class="samples-grid">
 
-        <!-- AU01909: Word or Phrase Repetition -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-linguistic">Word / Phrase Repetition</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
-            <p class="transcript-text">"Having determined that Mrs. Payne determined that Mrs. Payne was a responsible and reliable citizen, Hosty interviewed her on November 1."</p>
+          <div class="subcategory-badge badge-linguistic">Word / Phrase Repetition</div>
+          <div class="field-label">Transcript</div>
+          <p class="transcript-text">"Having determined that Mrs. Payne determined that Mrs. Payne was a responsible and reliable citizen, Hosty interviewed her on November 1."</p>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU01909.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Unintentional repetition of words or phrases detected. The model identifies repeated token sequences in the output alignment that are absent from the reference transcript — a known failure mode of attention-based TTS decoders.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Unintentional repetition of words or phrases detected. The model identifies repeated token sequences in the output alignment absent from the reference transcript — a known failure mode of attention-based TTS decoders.</div>
         </div>
-        <!-- TM00805: Mispronounced Words -->
+
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-linguistic">Mispronounced Words</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
+          <div class="subcategory-badge badge-linguistic">Mispronounced Words</div>
+          <div class="field-label">Transcript</div>
           <p class="transcript-text">"We stored 2 L at 17°C for testing."</p>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/TM00805.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Units and abbreviations are mispronounced — "L" (litres) and "17°C" are read as raw symbols rather than natural expansions. The model detects a mismatch between expected prosodic patterns for unit abbreviations and the produced phoneme sequence.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Units and abbreviations are mispronounced — "L" and "17°C" are read as raw symbols rather than natural expansions. The model detects a mismatch between expected prosodic patterns for unit abbreviations and the produced phoneme sequence.</div>
         </div>
 
-        <!-- TM00874 (desc CSV): Mispronounced Words / acronyms -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-linguistic">Mispronounced Words / Acronyms</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
-          <p class="transcript-text">"Prof Rao discussed U.N. and No.10" <span style="color:var(--muted);font-size:12px;font-style:normal;">(shorthand notations pronounced incorrectly)</span></p>
+          <div class="subcategory-badge badge-linguistic">Mispronounced Acronyms</div>
+          <div class="field-label">Transcript</div>
+          <p class="transcript-text">"Prof Rao discussed U.N. and No.10." <span style="color:var(--muted);font-style:normal;">(shorthand notations pronounced incorrectly)</span></p>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/TM00874.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Shorthand notations like "U.N." and "No.10" are pronounced incorrectly or in an awkward, non-natural manner. The model flags a mismatch between the expected phoneme expansion for acronyms and the produced output.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Shorthand notations like "U.N." and "No.10" are pronounced incorrectly or in an awkward, non-natural manner. The model flags a mismatch between the expected phoneme expansion for acronyms and the produced output.</div>
         </div>
 
-        <!-- TM01786: Unnatural Paralinguistic Sounds -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-linguistic">Unnatural Paralinguistic Sounds</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
+          <div class="subcategory-badge badge-linguistic">Unnatural Paralinguistic Sounds</div>
+          <div class="field-label">Transcript</div>
           <p class="transcript-text">"During the physics experiment ...[Umm].. raises additional concerns ...[Uh].. if we want accurate conclusions."</p>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/TM01786.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Filler sounds "Umm" and "Uh" appear at positions and with acoustic profiles inconsistent with natural disfluency. The model detects non-lexical vocalisations whose spectral characteristics do not match surrounding phonetic context.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Filler sounds "Umm" and "Uh" appear at positions and with acoustic profiles inconsistent with natural disfluency. The model detects non-lexical vocalisations whose spectral characteristics do not match surrounding phonetic context.</div>
         </div>
 
       </div>
     </div>
 
-    <!-- ══ TEMPORAL / PROSODIC ══ -->
+    <!-- TEMPORAL / PROSODIC -->
     <div class="artefact-panel cat-temporal" id="panel-temporal">
       <div class="samples-grid">
 
-        <!-- AU14892: Missing Natural Pauses -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-temporal">Missing Natural Pauses</span>
-          </div>
-          <div class="artefact-desc">Overly Fast Speech</div>
+          <div class="subcategory-badge badge-temporal">Missing Natural Pauses</div>
+          <div class="artefact-desc">Overly fast speech — natural breath timing absent</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU14892.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Overly fast speech with missing expected natural pauses and subtle breathing moments. The synthesiser produces no breath cues at clause boundaries, making the output sound rushed and robotic.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Overly fast speech with missing expected natural pauses and subtle breathing moments. The synthesiser produces no breath cues at clause boundaries, making the output sound rushed and robotic.</div>
         </div>
 
-        <!-- TM01894: Lack of Expressiveness -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-temporal">Lack of Expressiveness</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
+          <div class="subcategory-badge badge-temporal">Lack of Expressiveness</div>
+          <div class="field-label">Transcript</div>
           <p class="transcript-text">"You're quitting tomorrow? You're not serious, are you?!"</p>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/TM01894.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Despite the surprised, questioning content, the F0 contour is nearly flat. The model flags near-zero F0 variance and absence of pitch rises expected in interrogative and exclamatory utterances.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Despite the surprised, questioning content, the F0 contour is nearly flat. The model flags near-zero F0 variance and absence of pitch rises expected in interrogative and exclamatory utterances.</div>
         </div>
 
-        <!-- TM01946: Lack of Expressiveness -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-temporal">Lack of Expressiveness</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
+          <div class="subcategory-badge badge-temporal">Lack of Expressiveness</div>
+          <div class="field-label">Transcript</div>
           <p class="transcript-text">"This is unreal! No way! I refuse to believe this."</p>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/TM01946.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Highly exclamatory content delivered with monotonous intonation. The model detects absence of sharp F0 peaks at "unreal" and "No way", and uniform energy across phrases that should carry strong stress contrast.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Highly exclamatory content delivered with monotonous intonation. The model detects absence of sharp F0 peaks at "unreal" and "No way", and uniform energy across phrases that should carry strong stress contrast.</div>
         </div>
 
-        <!-- TM01833 (desc CSV): Lack of Expressiveness -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-temporal">Lack of Expressiveness</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
-          <p class="transcript-text"><span style="color:var(--muted);font-size:12px;font-style:normal;">Emotionally charged and surprised sentence delivered flat.</span></p>
+          <div class="subcategory-badge badge-temporal">Lack of Expressiveness</div>
+          <div class="artefact-desc">Emotionally charged sentence delivered flat</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/TM01833.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            The emotionally charged and surprised tone of the sentence is delivered in a flat or monotonous manner. The model identifies near-zero F0 dynamics inconsistent with the expected affective prosody for this utterance type.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">The emotionally charged and surprised tone of the sentence is delivered in a flat or monotonous manner. The model identifies near-zero F0 dynamics inconsistent with the expected affective prosody for this utterance type.</div>
         </div>
 
-        <!-- TM02048: Awkward Pauses -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-temporal">Awkward Pauses</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
+          <div class="subcategory-badge badge-temporal">Awkward Pauses</div>
+          <div class="field-label">Transcript</div>
           <p class="transcript-text">"When the. Final whistle. Blew the. Stadium exploded. Into celebration."</p>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/TM02048.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Pauses occur at syntactically implausible positions — mid-noun-phrase and mid-clause — disrupting natural prosodic grouping. The model identifies silence at positions inconsistent with natural speech rhythm.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Pauses occur at syntactically implausible positions — mid-noun-phrase and mid-clause — disrupting natural prosodic grouping. The model identifies silence at positions inconsistent with natural speech rhythm.</div>
         </div>
 
-        <!-- TM02031 (desc CSV): Awkward Pauses -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-temporal">Awkward Pauses</span>
-          </div>
-          <div class="transcript-label">Transcript</div>
-          <p class="transcript-text"><span style="color:var(--muted);font-size:12px;font-style:normal;">Unnatural and frequent breaks disrupt conversational flow.</span></p>
+          <div class="subcategory-badge badge-temporal">Awkward Pauses</div>
+          <div class="artefact-desc">Unnatural breaks disrupt conversational flow</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/TM02031.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Unnatural and frequent breaks disrupt the natural flow of the sentence and affect its conversational rhythm. The model detects silence intervals at syntactically implausible positions throughout the utterance.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Unnatural and frequent breaks disrupt the natural flow of the sentence and affect its conversational rhythm. The model detects silence intervals at syntactically implausible positions throughout the utterance.</div>
         </div>
 
       </div>
     </div>
 
-    <!-- ══ SIGNAL-LEVEL ══ -->
+    <!-- SIGNAL-LEVEL -->
     <div class="artefact-panel cat-signal" id="panel-signal">
       <div class="samples-grid">
 
-        <!-- AU05632: Background / Quantization Noise -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-signal">Background Noise</span>
-          </div>
-          <div class="artefact-desc">Quantization Noise</div>
+          <div class="subcategory-badge badge-signal">Background Noise</div>
+          <div class="artefact-desc">Quantization noise</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU05632.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Continuous unwanted noise present alongside clear vocals. The model detects stationary noise floor elevation in high-frequency bands, a typical artefact of vocoder quantization.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Continuous unwanted noise present alongside clear vocals. The model detects stationary noise floor elevation in high-frequency bands, a typical artefact of vocoder quantization.</div>
         </div>
 
-        <!-- AU10016: Background / Crackle -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-signal">Background Noise</span>
-          </div>
-          <div class="artefact-desc">Crackle Sound</div>
+          <div class="subcategory-badge badge-signal">Background Noise</div>
+          <div class="artefact-desc">Crackle sound</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU10016.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Crackling noise accompanies the speech signal. The model detects semi-periodic low-energy transients distributed across the signal, inconsistent with clean human speech recordings.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Crackling noise accompanies the speech signal. The model detects semi-periodic low-energy transients distributed across the signal, inconsistent with clean human speech recordings.</div>
         </div>
 
-        <!-- AU12156: Background / Electric Buzz -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-signal">Background Noise</span>
-          </div>
-          <div class="artefact-desc">Electric Buzz</div>
+          <div class="subcategory-badge badge-signal">Background Noise</div>
+          <div class="artefact-desc">Electric buzz</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU12156.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Persistent electrical buzz present in the background. The model identifies a narrow-band tonal component at 50/60 Hz harmonics, characteristic of electrical interference introduced during synthesis or codec processing.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Persistent electrical buzz present in the background. The model identifies a narrow-band tonal component at 50/60 Hz harmonics, characteristic of electrical interference introduced during synthesis or codec processing.</div>
         </div>
 
-        <!-- AU10822 (desc CSV): Background / Static -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-signal">Background Noise</span>
-          </div>
-          <div class="artefact-desc">Static Noise</div>
+          <div class="subcategory-badge badge-signal">Background Noise</div>
+          <div class="artefact-desc">Static noise</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU10822.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Noticeable static noise interferes with the clarity of the speech signal. The model detects a broadband noise floor inconsistent with clean studio conditions, flagging it as a signal-level synthesis artefact.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Noticeable static noise interferes with the clarity of the speech signal. The model detects a broadband noise floor inconsistent with clean studio conditions, flagging it as a signal-level synthesis artefact.</div>
         </div>
 
-        <!-- AU06841: Impulse / Click -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-signal">Impulse Noise</span>
-          </div>
-          <div class="artefact-desc">Click Sound</div>
+          <div class="subcategory-badge badge-signal">Impulse Noise</div>
+          <div class="artefact-desc">Click sound</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU06841.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Short, sudden click-like bursts appear at irregular intervals. The model identifies transient energy spikes inconsistent with phoneme boundaries, a hallmark of autoregressive neural codec decoding errors.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Short, sudden click-like bursts appear at irregular intervals. The model identifies transient energy spikes inconsistent with phoneme boundaries, a hallmark of autoregressive neural codec decoding errors.</div>
         </div>
 
-        <!-- AU08222: Impulse / Thud -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-signal">Impulse Noise</span>
-          </div>
-          <div class="artefact-desc">Thud Sound</div>
+          <div class="subcategory-badge badge-signal">Impulse Noise</div>
+          <div class="artefact-desc">Thud sound</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU08222.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Low-frequency thud-like impulses interrupt the speech signal. The model detects broadband low-frequency transients inconsistent with natural phoneme transitions, indicating synthesis-stage reconstruction failures.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Low-frequency thud-like impulses interrupt the speech signal. The model detects broadband low-frequency transients inconsistent with natural phoneme transitions, indicating synthesis-stage reconstruction failures.</div>
         </div>
 
       </div>
     </div>
 
-    <!-- ══ VOICE-QUALITY ══ -->
+    <!-- VOICE-QUALITY -->
     <div class="artefact-panel cat-spectral" id="panel-spectral">
       <div class="samples-grid">
 
-        <!-- AU03007: Unnatural Voice Timbre -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-spectral">Unnatural Voice Timbre</span>
-          </div>
-          <div class="artefact-desc">Metallic and Over-sharpened</div>
+          <div class="subcategory-badge badge-spectral">Unnatural Voice Timbre</div>
+          <div class="artefact-desc">Metallic and over-sharpened</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU03007.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Voice texture is metallic and over-sharpened. Harmonic-to-noise ratio is unnaturally high, and the spectral envelope shows over-regularised harmonics inconsistent with natural human vocal fold vibration.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Voice texture is metallic and over-sharpened. Harmonic-to-noise ratio is unnaturally high, and the spectral envelope shows over-regularised harmonics inconsistent with natural human vocal fold vibration.</div>
         </div>
 
-        <!-- AU05456 (desc CSV): Unnatural Voice Timbre -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-spectral">Unnatural Voice Timbre</span>
-          </div>
-          <div class="artefact-desc">Synthetic voice quality — lacks natural human resonance</div>
+          <div class="subcategory-badge badge-spectral">Unnatural Voice Timbre</div>
+          <div class="artefact-desc">Synthetic quality — lacks natural human resonance</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU05456.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Distinctly synthetic voice quality that sounds artificial and lacks natural human resonance. The model detects an overly smooth spectral envelope and absence of natural formant bandwidth variation characteristic of real vocal tracts.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Distinctly synthetic voice quality that sounds artificial and lacks natural human resonance. The model detects an overly smooth spectral envelope and absence of natural formant bandwidth variation characteristic of real vocal tracts.</div>
         </div>
 
-        <!-- AU04248: Muffled Voice -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-spectral">Muffled Voice</span>
-          </div>
-          <div class="artefact-desc">Muffled / Distant Voice</div>
+          <div class="subcategory-badge badge-spectral">Muffled Voice</div>
+          <div class="artefact-desc">Muffled / distant voice</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU04248.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Voice sounds suppressed, giving the impression of a covered or distant speaker. Significant high-frequency attenuation above 4 kHz detected, consistent with low-pass filtering introduced by certain neural vocoders.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Voice sounds suppressed, giving the impression of a covered or distant speaker. Significant high-frequency attenuation above 4 kHz detected, consistent with low-pass filtering introduced by certain neural vocoders.</div>
         </div>
 
-        <!-- AU12673: Distorted / Wobbly Voice -->
         <div class="sample-card">
-          <div class="sample-meta">
-            <span class="subcategory-badge badge-spectral">Distorted / Wobbly Voice</span>
-          </div>
-          <div class="artefact-desc">Shaky Unstable Voice</div>
+          <div class="subcategory-badge badge-spectral">Distorted / Wobbly Voice</div>
+          <div class="artefact-desc">Shaky, unstable voice</div>
           <div class="audio-row">
-            <div class="audio-row-label"><span class="chip chip-spoof">Spoof</span></div>
+            <div class="chip-label chip-spoof-label">Spoof</div>
             <audio controls><source src="static/audio/AU12673.wav" type="audio/wav">Your browser does not support audio.</audio>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">&#9660; Show Explanation</button>
-          <div class="explanation-box">
-            Voice is shaky and unstable throughout the utterance. Periodic F0 modulation inconsistent with natural vibrato detected, a characteristic wobble introduced by phase reconstruction errors in GAN-based vocoders.
-          </div>
+          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
+          <div class="explanation-box">Voice is shaky and unstable throughout. Periodic F0 modulation inconsistent with natural vibrato detected, a characteristic wobble introduced by phase reconstruction errors in GAN-based vocoders.</div>
         </div>
 
       </div>
@@ -589,7 +712,7 @@
 </main>
 
 <footer>
-  <p>Anonymous Submission &middot; Under Review at IJCB 2026</p>
+  Anonymous Submission &nbsp;·&nbsp; 
 </footer>
 
 <script>
@@ -604,10 +727,8 @@
   function toggleExp(btn) {
     const box = btn.nextElementSibling;
     const open = box.classList.toggle('open');
-    btn.innerHTML = (open ? '&#9650; Hide' : '&#9660; Show') + ' Explanation';
+    btn.textContent = open ? 'Hide explanation' : 'Show explanation';
   }
 </script>
 </body>
 </html>
-
-
