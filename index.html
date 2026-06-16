@@ -33,8 +33,6 @@
       line-height: 1.75;
       -webkit-font-smoothing: antialiased;
     }
-
-    /* ── HEADER ── */
     header {
       max-width: 760px;
       margin: 0 auto;
@@ -78,15 +76,11 @@
       display: inline-block;
     }
     .btn:hover { border-color: var(--text); background: var(--surface2); }
-
-    /* ── MAIN ── */
     main {
       max-width: 900px;
       margin: 0 auto;
       padding: 0 24px 80px;
     }
-
-    /* ── SECTION ── */
     .section { margin-top: 64px; }
     .section-eyebrow {
       font-size: 11px;
@@ -110,8 +104,6 @@
       margin-bottom: 32px;
       line-height: 1.7;
     }
-
-    /* ── ABSTRACT ── */
     .abstract-text {
       font-family: var(--display);
       font-size: 15px;
@@ -120,8 +112,6 @@
       border-left: 2px solid var(--border2);
       padding-left: 20px;
     }
-
-    /* ── TAXONOMY TABLE ── */
     .taxonomy-table {
       width: 100%;
       border-collapse: collapse;
@@ -169,8 +159,6 @@
       font-size: 12px;
       color: var(--muted);
     }
-
-    /* ── TAB BAR ── */
     .tab-bar {
       display: flex;
       gap: 0;
@@ -197,12 +185,8 @@
     .tab[data-cat="temporal"].active     { color: var(--accent-tmp);  border-bottom-color: var(--accent-tmp); }
     .tab[data-cat="signal"].active       { color: var(--accent-sig);  border-bottom-color: var(--accent-sig); }
     .tab[data-cat="spectral"].active     { color: var(--accent-vq);   border-bottom-color: var(--accent-vq); }
-
-    /* ── PANELS ── */
     .artefact-panel { display: none; }
     .artefact-panel.active { display: block; }
-
-    /* ── SAMPLE GRID ── */
     .samples-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -216,14 +200,11 @@
       transition: border-color .15s;
     }
     .sample-card:hover { border-color: var(--border2); }
-
-    /* left border accent per category */
     .cat-articulation .sample-card { border-left: 3px solid var(--accent-art); }
     .cat-linguistic   .sample-card { border-left: 3px solid var(--accent-ling); }
     .cat-temporal     .sample-card { border-left: 3px solid var(--accent-tmp); }
     .cat-signal       .sample-card { border-left: 3px solid var(--accent-sig); }
     .cat-spectral     .sample-card { border-left: 3px solid var(--accent-vq); }
-
     .subcategory-badge {
       font-size: 10px;
       font-weight: 600;
@@ -237,7 +218,6 @@
     .badge-temporal     { color: var(--accent-tmp); }
     .badge-signal       { color: var(--accent-sig); }
     .badge-spectral     { color: var(--accent-vq); }
-
     .field-label {
       font-size: 10px;
       font-weight: 600;
@@ -265,8 +245,6 @@
       background: var(--surface2);
       border-radius: 2px;
     }
-
-    /* audio */
     .audio-row { margin-bottom: 8px; }
     .chip-label {
       font-size: 10px;
@@ -283,8 +261,6 @@
       border-radius: 2px;
       outline: none;
     }
-
-    /* explanation */
     .explanation-toggle {
       margin-top: 10px;
       width: 100%;
@@ -312,8 +288,6 @@
       border-left: 2px solid var(--border2);
     }
     .explanation-box.open { display: block; }
-
-    /* ── FOOTER ── */
     footer {
       max-width: 900px;
       margin: 0 auto;
@@ -322,7 +296,6 @@
       font-size: 12px;
       color: var(--muted);
     }
-
     @media (max-width: 600px) {
       header { padding: 48px 20px 40px; }
       h1 { font-size: 24px; }
@@ -332,24 +305,17 @@
   </style>
 </head>
 <body>
-
-<!-- HEADER -->
 <header>
   <h1>PARTS of Synthetic Speech: A Taxonomy-Driven Framework for Simulating Perceptual Artifacts in Synthetic Speech</h1>
   <div class="authors">Anonymous Submission</div>
 </header>
-
 <main>
-
-  <!-- Abstract -->
   <section class="section">
     <div class="section-eyebrow">Abstract</div>
     <p class="abstract-text">
-      Recent advances in explainable audio deepfake detection have highlighted the importance of perceptually meaningful artifacts that humans rely on to identify synthetic speech. However, obtaining artifact-level annotations remains costly, subjective, and difficult to scale. In this work, we propose a taxonomy-driven framework for simulating perceptual artifacts in synthetic speech. We first organize commonly reported deepfake artifacts into a structured taxonomy and then introduce artifact-specific simulation strategies that generate diverse manifestations of these artifacts through transcript-level modifications and signal-level transformations. To ensure that the intended characteristics are preserved, we further design validation procedures for artifact verification. Using the proposed framework, we generate PARTS dataset, a corpus of over 26,000 synthetic speech samples with automatically derived artifact annotations and metadata. Human evaluation demonstrates that the simulated artifacts are perceptually recognizable, while classification experiments indicate that the generated artifact categories are sufficiently distinguishable. Our framework offers a scalable alternative to manual artifact annotation and facilitates future research on explainable and human-centric audio deepfake analysis.  
+      Recent advances in explainable audio deepfake detection have highlighted the importance of perceptually meaningful artifacts that humans rely on to identify synthetic speech. However, obtaining artifact-level annotations remains costly, subjective, and difficult to scale. In this work, we propose a taxonomy-driven framework for simulating perceptual artifacts in synthetic speech. We first organize commonly reported deepfake artifacts into a structured taxonomy and then introduce artifact-specific simulation strategies that generate diverse manifestations of these artifacts through transcript-level modifications and signal-level transformations. To ensure that the intended characteristics are preserved, we further design validation procedures for artifact verification. Using the proposed framework, we generate PARTS dataset, a corpus of over 26,000 synthetic speech samples with automatically derived artifact annotations and metadata. Human evaluation demonstrates that the simulated artifacts are perceptually recognizable, while classification experiments indicate that the generated artifact categories are sufficiently distinguishable. Our framework offers a scalable alternative to manual artifact annotation and facilitates future research on explainable and human-centric audio deepfake analysis.
     </p>
   </section>
-
-  <!-- Taxonomy -->
   <section class="section">
     <div class="section-eyebrow">Artefact Taxonomy</div>
     <div class="section-title">Five Perceptual Categories</div>
@@ -391,13 +357,10 @@
       </tbody>
     </table>
   </section>
-
-  <!-- Audio Samples -->
   <section class="section">
     <div class="section-eyebrow">Audio Samples</div>
     <div class="section-title">Samples by Artefact Category</div>
     <p class="section-desc">Each card shows the transcript (where applicable), a spoofed sample exhibiting the named artefact, and the model's explanation for its detection.</p>
-
     <div class="tab-bar">
       <button class="tab active" data-cat="articulation">Articulation</button>
       <button class="tab" data-cat="linguistic">Linguistic / Paralinguistic</button>
@@ -405,11 +368,9 @@
       <button class="tab" data-cat="signal">Signal-Level</button>
       <button class="tab" data-cat="spectral">Voice-Quality</button>
     </div>
-
     <!-- ARTICULATION -->
     <div class="artefact-panel cat-articulation active" id="panel-articulation">
       <div class="samples-grid">
-
         <div class="sample-card">
           <div class="subcategory-badge badge-articulation">Slurred Speech</div>
           <div class="field-label">Transcript</div>
@@ -421,7 +382,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Word boundaries are merged and blended throughout the utterance. The synthesiser fails to produce distinct inter-word silence intervals, causing adjacent phonemes to coalesce in a way uncharacteristic of natural speech.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-articulation">Poor Word Articulation</div>
           <div class="field-label">Transcript</div>
@@ -433,7 +393,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Consonants are mispronounced due to poor articulatory precision — "block" becomes "bwock" and "amendment" is distorted at the final consonant. The model flags anomalous formant transitions at liquid and stop consonants.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-articulation">Poor Word Articulation</div>
           <div class="field-label">Transcript</div>
@@ -445,14 +404,11 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Words such as "carbonic acid" are distorted or imprecisely formed, reducing intelligibility despite clear word boundaries. The model detects reduced spectral energy in stop consonant bursts and anomalous vowel formants.</div>
         </div>
-
       </div>
     </div>
-
     <!-- LINGUISTIC -->
     <div class="artefact-panel cat-linguistic" id="panel-linguistic">
       <div class="samples-grid">
-
         <div class="sample-card">
           <div class="subcategory-badge badge-linguistic">Word / Phrase Repetition</div>
           <div class="field-label">Transcript</div>
@@ -464,7 +420,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Unintentional repetition of words or phrases detected. The model identifies repeated token sequences in the output alignment absent from the reference transcript — a known failure mode of attention-based TTS decoders.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-linguistic">Mispronounced Words</div>
           <div class="field-label">Transcript</div>
@@ -476,7 +431,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Units and abbreviations are mispronounced — "L" and "17°C" are read as raw symbols rather than natural expansions. The model detects a mismatch between expected prosodic patterns for unit abbreviations and the produced phoneme sequence.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-linguistic">Mispronounced Acronyms</div>
           <div class="field-label">Transcript</div>
@@ -488,7 +442,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Shorthand notations like "U.N." and "No.10" are pronounced incorrectly or in an awkward, non-natural manner. The model flags a mismatch between the expected phoneme expansion for acronyms and the produced output.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-linguistic">Unnatural Paralinguistic Sounds</div>
           <div class="field-label">Transcript</div>
@@ -500,14 +453,11 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Filler sounds "Umm" and "Uh" appear at positions and with acoustic profiles inconsistent with natural disfluency. The model detects non-lexical vocalisations whose spectral characteristics do not match surrounding phonetic context.</div>
         </div>
-
       </div>
     </div>
-
     <!-- TEMPORAL / PROSODIC -->
     <div class="artefact-panel cat-temporal" id="panel-temporal">
       <div class="samples-grid">
-
         <div class="sample-card">
           <div class="subcategory-badge badge-temporal">Missing Natural Pauses</div>
           <div class="artefact-desc">Overly fast speech — natural breath timing absent</div>
@@ -518,7 +468,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Overly fast speech with missing expected natural pauses and subtle breathing moments. The synthesiser produces no breath cues at clause boundaries, making the output sound rushed and robotic.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-temporal">Lack of Expressiveness</div>
           <div class="field-label">Transcript</div>
@@ -530,7 +479,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Despite the surprised, questioning content, the F0 contour is nearly flat. The model flags near-zero F0 variance and absence of pitch rises expected in interrogative and exclamatory utterances.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-temporal">Lack of Expressiveness</div>
           <div class="field-label">Transcript</div>
@@ -542,7 +490,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Highly exclamatory content delivered with monotonous intonation. The model detects absence of sharp F0 peaks at "unreal" and "No way", and uniform energy across phrases that should carry strong stress contrast.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-temporal">Lack of Expressiveness</div>
           <div class="artefact-desc">Emotionally charged sentence delivered flat</div>
@@ -553,7 +500,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">The emotionally charged and surprised tone of the sentence is delivered in a flat or monotonous manner. The model identifies near-zero F0 dynamics inconsistent with the expected affective prosody for this utterance type.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-temporal">Awkward Pauses</div>
           <div class="field-label">Transcript</div>
@@ -565,7 +511,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Pauses occur at syntactically implausible positions — mid-noun-phrase and mid-clause — disrupting natural prosodic grouping. The model identifies silence at positions inconsistent with natural speech rhythm.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-temporal">Awkward Pauses</div>
           <div class="artefact-desc">Unnatural breaks disrupt conversational flow</div>
@@ -576,14 +521,11 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Unnatural and frequent breaks disrupt the natural flow of the sentence and affect its conversational rhythm. The model detects silence intervals at syntactically implausible positions throughout the utterance.</div>
         </div>
-
       </div>
     </div>
-
     <!-- SIGNAL-LEVEL -->
     <div class="artefact-panel cat-signal" id="panel-signal">
       <div class="samples-grid">
-
         <div class="sample-card">
           <div class="subcategory-badge badge-signal">Background Noise</div>
           <div class="artefact-desc">Quantization noise</div>
@@ -594,7 +536,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Continuous unwanted noise present alongside clear vocals. The model detects stationary noise floor elevation in high-frequency bands, a typical artefact of vocoder quantization.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-signal">Background Noise</div>
           <div class="artefact-desc">Crackle sound</div>
@@ -605,7 +546,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Crackling noise accompanies the speech signal. The model detects semi-periodic low-energy transients distributed across the signal, inconsistent with clean human speech recordings.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-signal">Background Noise</div>
           <div class="artefact-desc">Electric buzz</div>
@@ -616,7 +556,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Persistent electrical buzz present in the background. The model identifies a narrow-band tonal component at 50/60 Hz harmonics, characteristic of electrical interference introduced during synthesis or codec processing.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-signal">Background Noise</div>
           <div class="artefact-desc">Static noise</div>
@@ -627,7 +566,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Noticeable static noise interferes with the clarity of the speech signal. The model detects a broadband noise floor inconsistent with clean studio conditions, flagging it as a signal-level synthesis artefact.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-signal">Impulse Noise</div>
           <div class="artefact-desc">Click sound</div>
@@ -638,7 +576,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Short, sudden click-like bursts appear at irregular intervals. The model identifies transient energy spikes inconsistent with phoneme boundaries, a hallmark of autoregressive neural codec decoding errors.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-signal">Impulse Noise</div>
           <div class="artefact-desc">Thud sound</div>
@@ -649,14 +586,11 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Low-frequency thud-like impulses interrupt the speech signal. The model detects broadband low-frequency transients inconsistent with natural phoneme transitions, indicating synthesis-stage reconstruction failures.</div>
         </div>
-
       </div>
     </div>
-
     <!-- VOICE-QUALITY -->
     <div class="artefact-panel cat-spectral" id="panel-spectral">
       <div class="samples-grid">
-
         <div class="sample-card">
           <div class="subcategory-badge badge-spectral">Unnatural Voice Timbre</div>
           <div class="artefact-desc">Metallic and over-sharpened</div>
@@ -667,7 +601,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Voice texture is metallic and over-sharpened. Harmonic-to-noise ratio is unnaturally high, and the spectral envelope shows over-regularised harmonics inconsistent with natural human vocal fold vibration.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-spectral">Unnatural Voice Timbre</div>
           <div class="artefact-desc">Synthetic quality — lacks natural human resonance</div>
@@ -678,7 +611,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Distinctly synthetic voice quality that sounds artificial and lacks natural human resonance. The model detects an overly smooth spectral envelope and absence of natural formant bandwidth variation characteristic of real vocal tracts.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-spectral">Muffled Voice</div>
           <div class="artefact-desc">Muffled / distant voice</div>
@@ -689,7 +621,6 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Voice sounds suppressed, giving the impression of a covered or distant speaker. Significant high-frequency attenuation above 4 kHz detected, consistent with low-pass filtering introduced by certain neural vocoders.</div>
         </div>
-
         <div class="sample-card">
           <div class="subcategory-badge badge-spectral">Distorted / Wobbly Voice</div>
           <div class="artefact-desc">Shaky, unstable voice</div>
@@ -700,18 +631,13 @@
           <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
           <div class="explanation-box">Voice is shaky and unstable throughout. Periodic F0 modulation inconsistent with natural vibrato detected, a characteristic wobble introduced by phase reconstruction errors in GAN-based vocoders.</div>
         </div>
-
       </div>
     </div>
-
   </section>
-
 </main>
-
 <footer>
-  Anonymous Submission &nbsp;·&nbsp; 
+  Anonymous Submission &nbsp;·&nbsp;
 </footer>
-
 <script>
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -729,3 +655,9 @@
 </script>
 </body>
 </html>
+HTMLEOF
+echo "written $(wc -l < /tmp/original.html) lines"
+Output
+
+written 657 lines
+Done
