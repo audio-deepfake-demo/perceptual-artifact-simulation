@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Explainable Audio Deepfake Detection — Demo</title>
+  <title>PARTS of Synthetic Speech: A Taxonomy-Driven Framework for Simulating Perceptual Artifacts in Synthetic Speech</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
   <style>
     :root {
@@ -345,7 +345,7 @@
   <section class="section">
     <div class="section-eyebrow">Abstract</div>
     <p class="abstract-text">
-      Audio deepfakes pose a growing threat to speaker verification systems and media integrity. While existing detection systems achieve strong performance, they remain opaque black boxes offering no insight into <em>why</em> a sample is flagged as spoofed. In this work, we present an explainable framework for audio deepfake detection that identifies and categorises specific acoustic artefacts left behind by generative models. Our approach maps detections onto an interpretable artefact taxonomy spanning articulation, linguistic/paralinguistic, temporal/prosodic, signal-level, and spectral/voice-quality dimensions, providing human-understandable rationale for each prediction.
+      Recent advances in explainable audio deepfake detection have highlighted the importance of perceptually meaningful artifacts that humans rely on to identify synthetic speech. However, obtaining artifact-level annotations remains costly, subjective, and difficult to scale. In this work, we propose a taxonomy-driven framework for simulating perceptual artifacts in synthetic speech. We first organize commonly reported deepfake artifacts into a structured taxonomy and then introduce artifact-specific simulation strategies that generate diverse manifestations of these artifacts through transcript-level modifications and signal-level transformations. To ensure that the intended characteristics are preserved, we further design validation procedures for artifact verification. Using the proposed framework, we generate PARTS dataset, a corpus of over 26,000 synthetic speech samples with automatically derived artifact annotations and metadata. Human evaluation demonstrates that the simulated artifacts are perceptually recognizable, while classification experiments indicate that the generated artifact categories are sufficiently distinguishable. Our framework offers a scalable alternative to manual artifact annotation and facilitates future research on explainable and human-centric audio deepfake analysis.  
     </p>
   </section>
 
