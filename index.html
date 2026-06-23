@@ -155,10 +155,9 @@
     .dot-tmp  { background: var(--accent-tmp); }
     .dot-sig  { background: var(--accent-sig); }
     .dot-vq   { background: var(--accent-vq); }
-    .taxonomy-table .sub {
-      font-size: 12px;
-      color: var(--muted);
-    }
+    .taxonomy-table .sub { font-size: 12px; color: var(--muted); }
+
+    /* ── Tab bar ── */
     .tab-bar {
       display: flex;
       gap: 0;
@@ -185,109 +184,89 @@
     .tab[data-cat="temporal"].active     { color: var(--accent-tmp);  border-bottom-color: var(--accent-tmp); }
     .tab[data-cat="signal"].active       { color: var(--accent-sig);  border-bottom-color: var(--accent-sig); }
     .tab[data-cat="spectral"].active     { color: var(--accent-vq);   border-bottom-color: var(--accent-vq); }
+
     .artefact-panel { display: none; }
     .artefact-panel.active { display: block; }
-    .samples-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 14px;
-    }
-    .sample-card {
-      background: var(--surface);
+
+    /* ── Subcategory accordion ── */
+    .subcat-block {
       border: 1px solid var(--border);
       border-radius: 3px;
-      padding: 18px 20px;
-      transition: border-color .15s;
-    }
-    .sample-card:hover { border-color: var(--border2); }
-    .cat-articulation .sample-card { border-left: 3px solid var(--accent-art); }
-    .cat-linguistic   .sample-card { border-left: 3px solid var(--accent-ling); }
-    .cat-temporal     .sample-card { border-left: 3px solid var(--accent-tmp); }
-    .cat-signal       .sample-card { border-left: 3px solid var(--accent-sig); }
-    .cat-spectral     .sample-card { border-left: 3px solid var(--accent-vq); }
-    .subcategory-badge {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .07em;
-      text-transform: uppercase;
       margin-bottom: 12px;
-      display: inline-block;
+      overflow: hidden;
     }
-    .badge-articulation { color: var(--accent-art); }
-    .badge-linguistic   { color: var(--accent-ling); }
-    .badge-temporal     { color: var(--accent-tmp); }
-    .badge-signal       { color: var(--accent-sig); }
-    .badge-spectral     { color: var(--accent-vq); }
-    .field-label {
+    .subcat-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 16px;
+      background: var(--surface2);
+      cursor: pointer;
+      user-select: none;
+      gap: 12px;
+    }
+    .subcat-header:hover { background: var(--border); }
+    .subcat-header-left { display: flex; align-items: center; gap: 10px; }
+    .subcat-name {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .subcat-desc-inline { font-size: 12px; color: var(--muted); }
+    .subcat-chevron {
+      font-size: 16px;
+      color: var(--muted);
+      transition: transform .2s;
+      flex-shrink: 0;
+    }
+    .subcat-block.open .subcat-chevron { transform: rotate(180deg); }
+    .subcat-body {
+      display: none;
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .subcat-block.open .subcat-body { display: block; }
+
+    /* ── Sample groups ── */
+    .sample-group { margin-bottom: 20px; }
+    .sample-group:last-child { margin-bottom: 0; }
+    .sample-group-label {
       font-size: 10px;
       font-weight: 600;
       letter-spacing: .08em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 4px;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
     }
-    .transcript-text {
-      font-family: var(--display);
-      font-size: 13px;
-      line-height: 1.65;
-      color: #3a3a37;
-      font-style: italic;
-      margin-bottom: 14px;
-      padding: 8px 10px;
-      background: var(--surface2);
-      border-radius: 2px;
+    .audio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 8px;
     }
-    .artefact-desc {
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 14px;
-      padding: 6px 10px;
-      background: var(--surface2);
-      border-radius: 2px;
-    }
-    .audio-row { margin-bottom: 8px; }
-    .chip-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 4px;
-    }
-    .chip-spoof-label { color: #9b2335; }
-    audio {
-      width: 100%;
-      height: 28px;
-      border-radius: 2px;
-      outline: none;
-    }
-    .explanation-toggle {
-      margin-top: 10px;
-      width: 100%;
-      background: none;
+    .audio-card {
+      background: var(--surface);
       border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: .04em;
-      padding: 6px 0;
-      cursor: pointer;
       border-radius: 2px;
-      transition: border-color .15s, color .15s;
+      padding: 8px 10px;
     }
-    .explanation-toggle:hover { border-color: var(--border2); color: var(--text); }
-    .explanation-box {
-      display: none;
-      margin-top: 8px;
-      padding: 10px 12px;
-      background: var(--surface2);
-      border-radius: 2px;
-      font-size: 12px;
-      color: #4a4a46;
-      line-height: 1.7;
-      border-left: 2px solid var(--border2);
-    }
-    .explanation-box.open { display: block; }
+    audio { width: 100%; height: 28px; border-radius: 2px; outline: none; }
+
+    /* accent left-border per category */
+    .cat-articulation .audio-card { border-left: 3px solid var(--accent-art); }
+    .cat-linguistic   .audio-card { border-left: 3px solid var(--accent-ling); }
+    .cat-temporal     .audio-card { border-left: 3px solid var(--accent-tmp); }
+    .cat-signal       .audio-card { border-left: 3px solid var(--accent-sig); }
+    .cat-spectral     .audio-card { border-left: 3px solid var(--accent-vq); }
+
+    .subcat-name.art  { color: var(--accent-art); }
+    .subcat-name.ling { color: var(--accent-ling); }
+    .subcat-name.tmp  { color: var(--accent-tmp); }
+    .subcat-name.sig  { color: var(--accent-sig); }
+    .subcat-name.vq   { color: var(--accent-vq); }
+
     footer {
       max-width: 900px;
       margin: 0 auto;
@@ -299,7 +278,7 @@
     @media (max-width: 600px) {
       header { padding: 48px 20px 40px; }
       h1 { font-size: 24px; }
-      .samples-grid { grid-template-columns: 1fr; }
+      .audio-grid { grid-template-columns: 1fr; }
       .taxonomy-table { font-size: 12px; }
     }
   </style>
@@ -310,121 +289,93 @@
   <div class="authors">Anonymous Submission</div>
 </header>
 <main>
-  
+
   <section class="section">
     <div class="section-eyebrow">Abstract</div>
     <p class="abstract-text">
-       Recent advances in explainable audio deepfake detection have highlighted the importance of perceptually meaningful artifact-based explanations that are intuitive for non-technical users. However, developing such systems requires artifact-level annotations, which are typically obtained through human labeling and are costly, subjective, and difficult to scale. In this work, we propose ArtiFake, a taxonomy-driven approach for simulating perceptual artifacts in synthetic speech. We first organize commonly observed artifacts into a structured taxonomy and then design artifact-specific simulation strategies that introduce these artifacts through transcript-level modifications and signal-level transformations. By generating artifacts in a controlled manner, the proposed approach enables scalable creation of artifact-level annotations and provides greater control over artifact categories and distributions. Using the proposed framework, we create ArtiFake, a large-scale corpus comprising over 26k synthetic speech samples covering 13 perceptual artifact categories. The proposed methodology provides a scalable alternative to manual artifact annotation. In addition, it is designed to be extensible to emerging artifact categories, supporting future research in explainable and human-centered audio deepfake analysis. 
+      Recent advances in explainable audio deepfake detection have highlighted the importance of perceptually meaningful artifact-based explanations that are intuitive for non-technical users. However, developing such systems requires artifact-level annotations, which are typically obtained through human labeling and are costly, subjective, and difficult to scale. In this work, we propose ArtiFake, a taxonomy-driven approach for simulating perceptual artifacts in synthetic speech. We first organize commonly observed artifacts into a structured taxonomy and then design artifact-specific simulation strategies that introduce these artifacts through transcript-level modifications and signal-level transformations. By generating artifacts in a controlled manner, the proposed approach enables scalable creation of artifact-level annotations and provides greater control over artifact categories and distributions. Using the proposed framework, we create ArtiFake, a large-scale corpus comprising over 26k synthetic speech samples covering 13 perceptual artifact categories. The proposed methodology provides a scalable alternative to manual artifact annotation. In addition, it is designed to be extensible to emerging artifact categories, supporting future research in explainable and human-centered audio deepfake analysis.
+    </p>
   </section>
-  
+
   <section class="section">
     <div class="section-eyebrow">Artefact Taxonomy</div>
     <div class="section-title">Five Perceptual Categories</div>
     <p class="section-desc">Our taxonomy organises deepfake artefacts into five perceptually grounded categories, each with subcategories describing how synthesised speech deviates from natural human speech.</p>
-<table class="taxonomy-table">
-  <thead>
-    <tr>
-      <th style="width:28%">Category</th>
-      <th style="width:28%">Subcategory</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-
-    <tr>
-      <td rowspan="2">
-        <span class="cat-label">
-          <span class="cat-dot dot-art"></span>
-          Articulation-Related
-        </span>
-      </td>
-      <td>Poor Word Articulation</td>
-      <td>Unclear / unintelligible words with clear word boundaries</td>
-    </tr>
-    <tr>
-      <td>Slurred Speech</td>
-      <td>Unclear speech with merged / blended word boundaries</td>
-    </tr>
-
-    <tr>
-      <td rowspan="3">
-        <span class="cat-label">
-          <span class="cat-dot dot-ling"></span>
-          Linguistic / Paralinguistic
-        </span>
-      </td>
-      <td>Word/Phrase Repetition</td>
-      <td>Unintentional repetition of words / phrases</td>
-    </tr>
-    <tr>
-      <td>Mishandled Non-Standard Words</td>
-      <td>Incorrect handling of abbreviations / date / units / named-entities etc.</td>
-    </tr>
-    <tr>
-      <td>Unnatural Paralinguistic Sounds</td>
-      <td>Non-verbal / filler sounds like 'hmm', 'uh' seem artificial and awkward</td>
-    </tr>
-
-    <tr>
-      <td rowspan="3">
-        <span class="cat-label">
-          <span class="cat-dot dot-tmp"></span>
-          Temporal / Prosodic
-        </span>
-      </td>
-      <td>Awkward Pauses</td>
-      <td>Unnatural word stress and pauses at awkward positions</td>
-    </tr>
-    <tr>
-      <td>Missing Natural Pauses</td>
-      <td>Overly fast speech lacking natural breath timings</td>
-    </tr>
-    <tr>
-      <td>Lack of Expressiveness</td>
-      <td>Monotonous speaking style with no expression / emotion</td>
-    </tr>
-
-    <tr>
-      <td rowspan="2">
-        <span class="cat-label">
-          <span class="cat-dot dot-sig"></span>
-          Signal-level
-        </span>
-      </td>
-      <td>Background Noise</td>
-      <td>Constant background noise like static, crackle, quantization noise</td>
-    </tr>
-    <tr>
-      <td>Impulse Noise</td>
-      <td>Sudden short-duration noise like clicks, thuds, transient noise etc.</td>
-    </tr>
-
-    <tr>
-      <td rowspan="3">
-        <span class="cat-label">
-          <span class="cat-dot dot-vq"></span>
-          Voice-Quality
-        </span>
-      </td>
-      <td>Muffled Voice</td>
-      <td>Suppressed / distant-sounding voice</td>
-    </tr>
-    <tr>
-      <td>Unnatural Voice Timbre</td>
-      <td>Synthetic / mechanical / overly-sharp voice texture</td>
-    </tr>
-    <tr>
-      <td>Distorted/Wobbly Voice</td>
-      <td>Stretched / warped / shaky / unstable voice</td>
-    </tr>
-
-  </tbody>
-</table>
+    <table class="taxonomy-table">
+      <thead>
+        <tr>
+          <th style="width:28%">Category</th>
+          <th style="width:28%">Subcategory</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="2"><span class="cat-label"><span class="cat-dot dot-art"></span>Articulation-Related</span></td>
+          <td>Poor Word Articulation</td>
+          <td>Unclear / unintelligible words with clear word boundaries</td>
+        </tr>
+        <tr>
+          <td>Slurred Speech</td>
+          <td>Unclear speech with merged / blended word boundaries</td>
+        </tr>
+        <tr>
+          <td rowspan="3"><span class="cat-label"><span class="cat-dot dot-ling"></span>Linguistic / Paralinguistic</span></td>
+          <td>Word/Phrase Repetition</td>
+          <td>Unintentional repetition of words / phrases</td>
+        </tr>
+        <tr>
+          <td>Mishandled Non-Standard Words</td>
+          <td>Incorrect handling of abbreviations / date / units / named-entities etc.</td>
+        </tr>
+        <tr>
+          <td>Unnatural Paralinguistic Sounds</td>
+          <td>Non-verbal / filler sounds like 'hmm', 'uh' seem artificial and awkward</td>
+        </tr>
+        <tr>
+          <td rowspan="3"><span class="cat-label"><span class="cat-dot dot-tmp"></span>Temporal / Prosodic</span></td>
+          <td>Awkward Pauses</td>
+          <td>Unnatural word stress and pauses at awkward positions</td>
+        </tr>
+        <tr>
+          <td>Missing Natural Pauses</td>
+          <td>Overly fast speech lacking natural breath timings</td>
+        </tr>
+        <tr>
+          <td>Lack of Expressiveness</td>
+          <td>Monotonous speaking style with no expression / emotion</td>
+        </tr>
+        <tr>
+          <td rowspan="2"><span class="cat-label"><span class="cat-dot dot-sig"></span>Signal-level</span></td>
+          <td>Background Noise</td>
+          <td>Constant background noise like static, crackle, quantization noise</td>
+        </tr>
+        <tr>
+          <td>Impulse Noise</td>
+          <td>Sudden short-duration noise like clicks, thuds, transient noise etc.</td>
+        </tr>
+        <tr>
+          <td rowspan="3"><span class="cat-label"><span class="cat-dot dot-vq"></span>Voice-Quality</span></td>
+          <td>Muffled Voice</td>
+          <td>Suppressed / distant-sounding voice</td>
+        </tr>
+        <tr>
+          <td>Unnatural Voice Timbre</td>
+          <td>Synthetic / mechanical / overly-sharp voice texture</td>
+        </tr>
+        <tr>
+          <td>Distorted/Wobbly Voice</td>
+          <td>Stretched / warped / shaky / unstable voice</td>
+        </tr>
+      </tbody>
+    </table>
   </section>
+
   <section class="section">
     <div class="section-eyebrow">Audio Samples</div>
     <div class="section-title">Samples by Artefact Category</div>
-    <p class="section-desc">Each card shows the transcript (where applicable), a spoofed sample exhibiting the named artefact, and the model's explanation for its detection.</p>
+    <p class="section-desc">Select a category, then expand a subcategory to hear reference and simulated samples side by side.</p>
+
     <div class="tab-bar">
       <button class="tab active" data-cat="articulation">Articulation</button>
       <button class="tab" data-cat="linguistic">Linguistic / Paralinguistic</button>
@@ -432,276 +383,533 @@
       <button class="tab" data-cat="signal">Signal-Level</button>
       <button class="tab" data-cat="spectral">Voice-Quality</button>
     </div>
-    <!-- ARTICULATION -->
+
     <div class="artefact-panel cat-articulation active" id="panel-articulation">
-      <div class="samples-grid">
-        <div class="sample-card">
-          <div class="subcategory-badge badge-articulation">Slurred Speech</div>
-          <div class="field-label">Transcript</div>
-          <p class="transcript-text">"to describe whose vast height and immense riches it would perhaps you yawobewougyaatoo wougyaouwmuch forwouwmewougyaouwtoyouyawoattempt."</p>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: TM00150</div>
-            <audio controls><source src="static/audio/TM00150.wav" type="audio/wav">Your browser does not support audio.</audio>
+      <div class="subcat-block open">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name art">Poor Word Articulation</span>
+            <span class="subcat-desc-inline">Unclear / unintelligible words with clear word boundaries</span>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Word boundaries are merged and blended throughout the utterance. The synthesiser fails to produce distinct inter-word silence intervals, causing adjacent phonemes to coalesce in a way uncharacteristic of natural speech.</div>
+          <span class="subcat-chevron">&#8964;</span>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-articulation">Poor Word Articulation</div>
-          <div class="field-label">Transcript</div>
-          <p class="transcript-text">"to bwock the amendmentw although I would be awfully glad to help get some other kind of amendment ratified."</p>
-          <div class="audio-row">
-    <div class="chip-label chip-spoof-label">Audio ID: TM02128</div>
-            <audio controls><source src="static/audio/TM02128.wav" type="audio/wav">Your browser does not support audio.</audio>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Reference/1188-133604-0033_voicec.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Reference/260-123286-0016_f5tts.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Reference/2961-961-0015.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Reference/5639-40744-0013.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Reference/7.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Reference/8230-279154-0005_f5tts.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Reference/8_ParallelGPT.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Reference/LA_E_1156753.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Reference/LA_E_1647542.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Reference/f5tts_260-123286-0016.wav" type="audio/wav"></audio></div>
+            </div>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Consonants are mispronounced due to poor articulatory precision — "block" becomes "bwock" and "amendment" is distorted at the final consonant. The model flags anomalous formant transitions at liquid and stop consonants.</div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Simulated/TM01400.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Simulated/TM02120.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Simulated/TM02136.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Simulated/TM08196.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Simulated/TM08733.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Simulated/TM08824.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Simulated/TM08942.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Simulated/TM09011.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Simulated/TM09290.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/PoorWordArticulation/Simulated/TM09719.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-articulation">Poor Word Articulation</div>
-          <div class="field-label">Transcript</div>
-          <p class="transcript-text">"Respiration, that is, the absorption of oxygen and the exhalation of carbonec acidua."</p>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: TM02157</div>
-            <audio controls><source src="static/audio/TM02157.wav" type="audio/wav">Your browser does not support audio.</audio>
+      </div>
+      <div class="subcat-block">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name art">Slurred Speech</span>
+            <span class="subcat-desc-inline">Unclear speech with merged / blended word boundaries</span>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Words such as "carbonic acid" are distorted or imprecisely formed, reducing intelligibility despite clear word boundaries. The model detects reduced spectral energy in stop consonant bursts and anomalous vowel formants.</div>
+          <span class="subcat-chevron">&#8964;</span>
+        </div>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Reference/0112.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Reference/136_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Reference/194_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Reference/270_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Reference/285_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Reference/2961-961-0016.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Reference/388_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Reference/7176-92135-0020.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Reference/8.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Reference/8455-210777-0055_valle.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Simulated/TM00005.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Simulated/TM00019.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Simulated/TM00183.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Simulated/TM03213.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Simulated/TM03254.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Simulated/TM07190.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Simulated/TM07245.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Simulated/TM07332.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Simulated/TM07492.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/ArticulationRelated/SlurredSpeech/Simulated/TM07495.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- LINGUISTIC -->
     <div class="artefact-panel cat-linguistic" id="panel-linguistic">
-      <div class="samples-grid">
-        <div class="sample-card">
-          <div class="subcategory-badge badge-linguistic">Word / Phrase Repetition</div>
-          <div class="field-label">Transcript</div>
-          <p class="transcript-text">"Having determined that Mrs. Payne determined that Mrs. Payne was a responsible and reliable citizen, Hosty interviewed her on November 1."</p>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU01909</div>
-            <audio controls><source src="static/audio/AU01909.wav" type="audio/wav">Your browser does not support audio.</audio>
+      <div class="subcat-block open">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name ling">Mishandled Non-Standard Words</span>
+            <span class="subcat-desc-inline">Incorrect handling of abbreviations / dates / units / named-entities</span>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Unintentional repetition of words or phrases detected. The model identifies repeated token sequences in the output alignment absent from the reference transcript — a known failure mode of attention-based TTS decoders.</div>
+          <span class="subcat-chevron">&#8964;</span>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-linguistic">Mishandled Non-Standard Words</div>
-          <div class="field-label">Transcript</div>
-          <p class="transcript-text">"We stored 2 L at 17°C for testing."</p>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: TM00805</div>
-            <audio controls><source src="static/audio/TM00805.wav" type="audio/wav">Your browser does not support audio.</audio>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Reference/web_e2ttsx2_s2_01_wrong_0.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Reference/web_ravdess_S1_voicebox_s1_01_neutral_0.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Reference/web_ravdess_S1_voicebox_s1_02_calm_0.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Reference/web_ravdess_S1_voicebox_s1_03_happy_0" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Reference/web_ravdess_S1_voicebox_s1_04_sad_0.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Reference/web_ravdess_S1_voicebox_s1_05_angry_0.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Reference/web_ravdess_S1_voicebox_s1_06_fearful_0.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Reference/web_ravdess_S1_voicebox_s1_07_disgust_0.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Reference/web_ravdess_S1_voicebox_s1_08_surprised_0.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Reference/web_ravdess_S2_Voicebox_s2_01_neutral_0.wav" type="audio/wav"></audio></div>
+            </div>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Units and abbreviations are mispronounced — "L" and "17°C" are read as raw symbols rather than natural expansions. The model detects a mismatch between expected prosodic patterns for unit abbreviations and the produced phoneme sequence.</div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Simulated/TM00807.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Simulated/TM00814.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Simulated/TM00830.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Simulated/TM00857.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Simulated/TM01024.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Simulated/TM01053.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Simulated/TM01168.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Simulated/TM07080.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Simulated/TM07082.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/MishandledNSW/Simulated/TM07173.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-linguistic">Mishandled Non-Standard Words</div>
-          <div class="field-label">Transcript</div>
-          <p class="transcript-text">"Prof Rao discussed U.N. and No.10." <span style="color:var(--muted);font-style:normal;">(shorthand notations pronounced incorrectly)</span></p>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: TM00874</div>
-            <audio controls><source src="static/audio/TM00874.wav" type="audio/wav">Your browser does not support audio.</audio>
+      </div>
+      <div class="subcat-block">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name ling">Unnatural Paralinguistic Sounds</span>
+            <span class="subcat-desc-inline">Non-verbal / filler sounds like 'hmm', 'uh' seem artificial</span>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Shorthand notations like "U.N." and "No.10" are pronounced incorrectly or in an awkward, non-natural manner. The model flags a mismatch between the expected phoneme expansion for acronyms and the produced output.</div>
+          <span class="subcat-chevron">&#8964;</span>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-linguistic">Unnatural Paralinguistic Sounds</div>
-          <div class="field-label">Transcript</div>
-          <p class="transcript-text">"During the physics experiment ...[Umm].. raises additional concerns ...[Uh].. if we want accurate conclusions."</p>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: TM01786</div>
-            <audio controls><source src="static/audio/TM01786.wav" type="audio/wav">Your browser does not support audio.</audio>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Reference/web_ravdess_S1_voicebox_1.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Reference/web_ravdess_S1_voicebox_2.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Reference/web_ravdess_S1_voicebox_3.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Reference/web_ravdess_S1_voicebox_4.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Reference/web_ravdess_S1_voicebox_5.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Reference/web_ravdess_S1_voicebox_6.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Reference/web_ravdess_S1_voicebox_7.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Reference/web_ravdess_S1_voicebox_8.wav" type="audio/wav"></audio></div>
+            </div>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Filler sounds "Umm" and "Uh" appear at positions and with acoustic profiles inconsistent with natural disfluency. The model detects non-lexical vocalisations whose spectral characteristics do not match surrounding phonetic context.</div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Simulated/TM01428.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Simulated/TM01435.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Simulated/TM01590.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Simulated/TM06180.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Simulated/TM06188.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Simulated/TM06253.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Simulated/TM06484.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/UnnaturalParalinguisticSounds/Simulated/TM06735.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="subcat-block">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name ling">Word / Phrase Repetition</span>
+            <span class="subcat-desc-inline">Unintentional repetition of words / phrases</span>
+          </div>
+          <span class="subcat-chevron">&#8964;</span>
+        </div>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Reference/2_voiceIdm.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Reference/4446-2275-0000.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Reference/4446_2271_000022_00001.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Reference/56_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Reference/F5tts_3575-170457-0009.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Reference/m1_script1_clean_segment.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Reference/speecht5_predicted_1_9_10.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Reference/vallex_predicted_0_30_30.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Simulated/AU01600.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Simulated/AU01635.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Simulated/AU01739.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Simulated/AU01760.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Simulated/TM00400.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Simulated/TM00421.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Simulated/TM00451.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/LinguisticParalinguistic/WordPhraseRepetition/Simulated/TM00551.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- TEMPORAL / PROSODIC -->
     <div class="artefact-panel cat-temporal" id="panel-temporal">
-      <div class="samples-grid">
-        <div class="sample-card">
-          <div class="subcategory-badge badge-temporal">Missing Natural Pauses</div>
-          <div class="artefact-desc">Overly fast speech — natural breath timing absent</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU14892</div>
-            <audio controls><source src="static/audio/AU14892.wav" type="audio/wav">Your browser does not support audio.</audio>
+      <div class="subcat-block open">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name tmp">Awkward Pauses</span>
+            <span class="subcat-desc-inline">Unnatural word stress and pauses at awkward positions</span>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Overly fast speech with missing expected natural pauses and subtle breathing moments. The synthesiser produces no breath cues at clause boundaries, making the output sound rushed and robotic.</div>
+          <span class="subcat-chevron">&#8964;</span>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-temporal">Lack of Expressiveness</div>
-          <div class="field-label">Transcript</div>
-          <p class="transcript-text">"You're quitting tomorrow? You're not serious, are you?!"</p>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: TM01894</div>
-            <audio controls><source src="static/audio/TM01894.wav" type="audio/wav">Your browser does not support audio.</audio>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Reference/0012_000032t2.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Reference/1188-133604-0033_sparktt.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Reference/260-123286-0016_valle.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Reference/8230-279154-0005.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Reference/bark_predicted_1_9_101.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Reference/f6_script2_clean_segment.wav" type="audio/wav"></audio></div>
+            </div>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Despite the surprised, questioning content, the F0 contour is nearly flat. The model flags near-zero F0 variance and absence of pitch rises expected in interrogative and exclamatory utterances.</div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Simulated/TM02079.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Simulated/TM05761.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Simulated/TM05866.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Simulated/TM05993.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Simulated/TM06140.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/AwkwardPauses/Simulated/TM06174.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-temporal">Lack of Expressiveness</div>
-          <div class="field-label">Transcript</div>
-          <p class="transcript-text">"This is unreal! No way! I refuse to believe this."</p>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: TM01946</div>
-            <audio controls><source src="static/audio/TM01946.wav" type="audio/wav">Your browser does not support audio.</audio>
+      </div>
+      <div class="subcat-block">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name tmp">Lack of Expressiveness</span>
+            <span class="subcat-desc-inline">Monotonous speaking style with no expression / emotion</span>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Highly exclamatory content delivered with monotonous intonation. The model detects absence of sharp F0 peaks at "unreal" and "No way", and uniform energy across phrases that should carry strong stress contrast.</div>
+          <span class="subcat-chevron">&#8964;</span>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-temporal">Lack of Expressiveness</div>
-          <div class="artefact-desc">Emotionally charged sentence delivered flat</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: TM01833</div>
-            <audio controls><source src="static/audio/TM01833.wav" type="audio/wav">Your browser does not support audio.</audio>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Reference/0_mega.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Reference/260-123286-0016_f5tts.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Reference/260-123286-0016_oz.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Reference/7176-92135-0020.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Reference/EN_3_2.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Reference/LA_D_9745303.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Reference/LA_D_9895350.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Reference/LA_E_1577937.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Reference/LA_E_2651438.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Reference/f2_script1_clean_segment.wav" type="audio/wav"></audio></div>
+            </div>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">The emotionally charged and surprised tone of the sentence is delivered in a flat or monotonous manner. The model identifies near-zero F0 dynamics inconsistent with the expected affective prosody for this utterance type.</div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Simulated/TM01879.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Simulated/TM01917.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Simulated/TM01999.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Simulated/TM03760.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Simulated/TM03939.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Simulated/TM04323.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Simulated/TM07580.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Simulated/TM07701.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Simulated/TM07753.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/LackofExpressiveness/Simulated/TM07774.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-temporal">Awkward Pauses</div>
-          <div class="field-label">Transcript</div>
-          <p class="transcript-text">"When the. Final whistle. Blew the. Stadium exploded. Into celebration."</p>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: TM02048</div>
-            <audio controls><source src="static/audio/TM02048.wav" type="audio/wav">Your browser does not support audio.</audio>
+      </div>
+      <div class="subcat-block">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name tmp">Missing Natural Pauses</span>
+            <span class="subcat-desc-inline">Overly fast speech lacking natural breath timings</span>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Pauses occur at syntactically implausible positions — mid-noun-phrase and mid-clause — disrupting natural prosodic grouping. The model identifies silence at positions inconsistent with natural speech rhythm.</div>
+          <span class="subcat-chevron">&#8964;</span>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-temporal">Awkward Pauses</div>
-          <div class="artefact-desc">Unnatural breaks disrupt conversational flow</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: TM02031</div>
-            <audio controls><source src="static/audio/TM02031.wav" type="audio/wav">Your browser does not support audio.</audio>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Reference/12.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Reference/12_e2tts.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Reference/3_yourtts.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Reference/4446-2275-0000_ns2.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Reference/61-70968-0010.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Reference/7176-92135-0020.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Reference/8230-279154-0005.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Reference/8230-279154-0005_ns2.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Reference/8455-210777-0055_oz.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Reference/EN_3_2.wav" type="audio/wav"></audio></div>
+            </div>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Unnatural and frequent breaks disrupt the natural flow of the sentence and affect its conversational rhythm. The model detects silence intervals at syntactically implausible positions throughout the utterance.</div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Simulated/AU14272.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Simulated/AU14294.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Simulated/AU14340.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Simulated/AU14414.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Simulated/AU14463.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Simulated/AU14625.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Simulated/AU14807.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Simulated/AU14890.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Simulated/AU14974.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/TemporalProsodic/MissingNaturalPauses/Simulated/AU14997.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- SIGNAL-LEVEL -->
     <div class="artefact-panel cat-signal" id="panel-signal">
-      <div class="samples-grid">
-        <div class="sample-card">
-          <div class="subcategory-badge badge-signal">Background Noise</div>
-          <div class="artefact-desc">Quantization noise</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU05632</div>
-            <audio controls><source src="static/audio/AU05632.wav" type="audio/wav">Your browser does not support audio.</audio>
+      <div class="subcat-block open">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name sig">Background Noise</span>
+            <span class="subcat-desc-inline">Constant background noise like static, crackle, quantization noise</span>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Continuous unwanted noise present alongside clear vocals. The model detects stationary noise floor elevation in high-frequency bands, a typical artefact of vocoder quantization.</div>
+          <span class="subcat-chevron">&#8964;</span>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-signal">Background Noise</div>
-          <div class="artefact-desc">Crackle sound</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU10016</div>
-            <audio controls><source src="static/audio/AU10016.wav" type="audio/wav">Your browser does not support audio.</audio>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Reference/11_cosyvoice.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Reference/56_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Reference/LA_E_1507526.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Reference/LA_E_1571044.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Reference/LA_E_1647542.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Reference/LA_E_1666468.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Reference/LA_E_1709002.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Reference/en_female_happy_0.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Reference/en_female_happy_1.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Reference/en_female_sad_0.wav" type="audio/wav"></audio></div>
+            </div>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Crackling noise accompanies the speech signal. The model detects semi-periodic low-energy transients distributed across the signal, inconsistent with clean human speech recordings.</div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Simulated/AU00427.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Simulated/AU00466.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Simulated/AU00558.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Simulated/AU00651.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Simulated/AU00690.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Simulated/AU01237.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Simulated/AU01353.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Simulated/AU01521.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Simulated/AU03237.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/BackgroundNoise/Simulated/AU03440.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-signal">Background Noise</div>
-          <div class="artefact-desc">Electric buzz</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU12156</div>
-            <audio controls><source src="static/audio/AU12156.wav" type="audio/wav">Your browser does not support audio.</audio>
+      </div>
+      <div class="subcat-block">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name sig">Impulse Noise</span>
+            <span class="subcat-desc-inline">Sudden short-duration noise like clicks, thuds, transient noise</span>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Persistent electrical buzz present in the background. The model identifies a narrow-band tonal component at 50/60 Hz harmonics, characteristic of electrical interference introduced during synthesis or codec processing.</div>
+          <span class="subcat-chevron">&#8964;</span>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-signal">Background Noise</div>
-          <div class="artefact-desc">Static noise</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU10822</div>
-            <audio controls><source src="static/audio/AU10822.wav" type="audio/wav">Your browser does not support audio.</audio>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Reference/0112.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Reference/2830-3979-0003.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Reference/LA_E_1318134.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Reference/LA_E_2566438.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Reference/LA_E_4540488.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Reference/LA_E_5115695.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Reference/LA_E_5367430.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Reference/bark_predicted_0_0_0_red.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Reference/bark_predicted_0_37_37.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Reference/fisher_4.wav" type="audio/wav"></audio></div>
+            </div>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Noticeable static noise interferes with the clarity of the speech signal. The model detects a broadband noise floor inconsistent with clean studio conditions, flagging it as a signal-level synthesis artefact.</div>
-        </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-signal">Impulse Noise</div>
-          <div class="artefact-desc">Click sound</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU06841</div>
-            <audio controls><source src="static/audio/AU06841.wav" type="audio/wav">Your browser does not support audio.</audio>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Simulated/AU06676.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Simulated/AU06718.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Simulated/AU06815.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Simulated/AU06879.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Simulated/AU06890.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Simulated/AU06952.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Simulated/AU07016.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Simulated/AU07751.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Simulated/AU07873.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/SignalLevel/ImpulseNoise/Simulated/AU08379.wav" type="audio/wav"></audio></div>
+            </div>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Short, sudden click-like bursts appear at irregular intervals. The model identifies transient energy spikes inconsistent with phoneme boundaries, a hallmark of autoregressive neural codec decoding errors.</div>
-        </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-signal">Impulse Noise</div>
-          <div class="artefact-desc">Thud sound</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU08222</div>
-            <audio controls><source src="static/audio/AU08222.wav" type="audio/wav">Your browser does not support audio.</audio>
-          </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Low-frequency thud-like impulses interrupt the speech signal. The model detects broadband low-frequency transients inconsistent with natural phoneme transitions, indicating synthesis-stage reconstruction failures.</div>
         </div>
       </div>
     </div>
-    <!-- VOICE-QUALITY -->
     <div class="artefact-panel cat-spectral" id="panel-spectral">
-      <div class="samples-grid">
-        <div class="sample-card">
-          <div class="subcategory-badge badge-spectral">Unnatural Voice Timbre</div>
-          <div class="artefact-desc">Metallic and over-sharpened</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU03007</div>
-            <audio controls><source src="static/audio/AU03007.wav" type="audio/wav">Your browser does not support audio.</audio>
+      <div class="subcat-block open">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name vq">Distorted / Wobbly Voice</span>
+            <span class="subcat-desc-inline">Stretched / warped / shaky / unstable voice</span>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Voice texture is metallic and over-sharpened. Harmonic-to-noise ratio is unnaturally high, and the spectral envelope shows over-regularised harmonics inconsistent with natural human vocal fold vibration.</div>
+          <span class="subcat-chevron">&#8964;</span>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-spectral">Unnatural Voice Timbre</div>
-          <div class="artefact-desc">Synthetic quality — lacks natural human resonance</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU05456</div>
-            <audio controls><source src="static/audio/AU05456.wav" type="audio/wav">Your browser does not support audio.</audio>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Reference/12038.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Reference/136_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Reference/17_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Reference/2094-142345-0029_wav_p.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Reference/308_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Reference/3575-170457-0009.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Reference/382_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Reference/3_ns2.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Reference/56_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Reference/LA_E_3137523.flac" type="audio/flac"></audio></div>
+            </div>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Distinctly synthetic voice quality that sounds artificial and lacks natural human resonance. The model detects an overly smooth spectral envelope and absence of natural formant bandwidth variation characteristic of real vocal tracts.</div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Simulated/AU12673.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Simulated/AU12682.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Simulated/AU12710.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Simulated/AU12720.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Simulated/AU13542.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Simulated/AU13686.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Simulated/AU14100.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Simulated/AU14265.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Simulated/AU15742.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/DistortedWobblyVoice/Simulated/AU15773.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-spectral">Muffled Voice</div>
-          <div class="artefact-desc">Muffled / distant voice</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU04248</div>
-            <audio controls><source src="static/audio/AU04248.wav" type="audio/wav">Your browser does not support audio.</audio>
+      </div>
+      <div class="subcat-block">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name vq">Muffled Voice</span>
+            <span class="subcat-desc-inline">Suppressed / distant-sounding voice</span>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Voice sounds suppressed, giving the impression of a covered or distant speaker. Significant high-frequency attenuation above 4 kHz detected, consistent with low-pass filtering introduced by certain neural vocoders.</div>
+          <span class="subcat-chevron">&#8964;</span>
         </div>
-        <div class="sample-card">
-          <div class="subcategory-badge badge-spectral">Distorted / Wobbly Voice</div>
-          <div class="artefact-desc">Shaky, unstable voice</div>
-          <div class="audio-row">
-            <div class="chip-label chip-spoof-label">Audio ID: AU12673</div>
-            <audio controls><source src="static/audio/AU12673.wav" type="audio/wav">Your browser does not support audio.</audio>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Reference/LA_D_9688627.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Reference/LA_D_9825451.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Reference/LA_D_9895350.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Reference/LA_T_9709369.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Reference/LA_T_9918063.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Reference/fisher_4.wav" type="audio/wav"></audio></div>
+            </div>
           </div>
-          <button class="explanation-toggle" onclick="toggleExp(this)">Show explanation</button>
-          <div class="explanation-box">Voice is shaky and unstable throughout. Periodic F0 modulation inconsistent with natural vibrato detected, a characteristic wobble introduced by phase reconstruction errors in GAN-based vocoders.</div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Simulated/AU00800.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Simulated/AU00821.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Simulated/AU00937.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Simulated/AU00974.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Simulated/AU01143.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/MuffledVoice/Simulated/AU01194.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="subcat-block">
+        <div class="subcat-header" onclick="toggleSubcat(this)">
+          <div class="subcat-header-left">
+            <span class="subcat-name vq">Unnatural Voice Timbre</span>
+            <span class="subcat-desc-inline">Synthetic / mechanical / overly-sharp voice texture</span>
+          </div>
+          <span class="subcat-chevron">&#8964;</span>
+        </div>
+        <div class="subcat-body">
+          <div class="sample-group">
+            <div class="sample-group-label">Reference samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Reference/2_voiceIdm.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Reference/3.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Reference/308_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Reference/56_decompressed.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Reference/LA_E_1666468.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Reference/LA_E_1774069.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Reference/LA_E_2651438.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Reference/LA_E_2794902.flac" type="audio/flac"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Reference/en_female_happy_0.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Reference/ibrispeech_74_conti_infer.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
+          <div class="sample-group">
+            <div class="sample-group-label">Simulated samples</div>
+            <div class="audio-grid">
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Simulated/AU00010.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Simulated/AU00092.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Simulated/AU00142.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Simulated/AU00152.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Simulated/AU00345.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Simulated/AU00380.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Simulated/AU02020.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Simulated/AU02441.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Simulated/AU02445.wav" type="audio/wav"></audio></div>
+              <div class="audio-card"><audio controls><source src="static/audio/VoiceQuality/UnnaturalVoiceTimbre/Simulated/AU02473.wav" type="audio/wav"></audio></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 </main>
+
 <footer>
   Anonymous Submission &nbsp;·&nbsp;
 </footer>
+
 <script>
   document.querySelectorAll('.tab').forEach(tab => {
     tab.addEventListener('click', () => {
@@ -711,10 +919,10 @@
       document.getElementById('panel-' + tab.dataset.cat).classList.add('active');
     });
   });
-  function toggleExp(btn) {
-    const box = btn.nextElementSibling;
-    const open = box.classList.toggle('open');
-    btn.textContent = open ? 'Hide explanation' : 'Show explanation';
+
+  function toggleSubcat(header) {
+    const block = header.closest('.subcat-block');
+    block.classList.toggle('open');
   }
 </script>
 </body>
